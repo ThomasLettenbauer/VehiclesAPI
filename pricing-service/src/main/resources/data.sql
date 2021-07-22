@@ -1,0 +1,5 @@
+insert into price(vehicle_id, currency, price) values (1, 'EUR', 20000.00)
+insert into price(vehicle_id, currency, price) values (2, 'EUR', 21000.00)
+insert into price(vehicle_id, currency, price) values (3, 'EUR', 22000.00)
+insert into price(vehicle_id, currency, price) values (4, 'EUR', 23000.00)
+insert into price(vehicle_id, currency, price) values (5, 'EUR', 24000.00)
