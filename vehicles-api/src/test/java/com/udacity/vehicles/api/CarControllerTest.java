@@ -1,7 +1,5 @@
 package com.udacity.vehicles.api;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -11,10 +9,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.google.gson.Gson;
 import com.udacity.vehicles.client.maps.MapsClient;
 import com.udacity.vehicles.client.prices.PriceClient;
 import com.udacity.vehicles.domain.Condition;
@@ -25,6 +21,7 @@ import com.udacity.vehicles.domain.manufacturer.Manufacturer;
 import com.udacity.vehicles.service.CarService;
 import java.net.URI;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,7 +65,7 @@ public class CarControllerTest {
     @MockBean
     private MapsClient mapsClient;
 
-    private MediaType contentType = new MediaType("application", "hal+json", Charset.forName("UTF-8"));
+    private final MediaType contentType = new MediaType("application", "hal+json", StandardCharsets.UTF_8);
 
     /**
      * Creates pre-requisites for testing, such as an example car.

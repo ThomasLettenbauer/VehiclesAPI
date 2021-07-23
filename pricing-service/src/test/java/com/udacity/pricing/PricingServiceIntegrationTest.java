@@ -33,7 +33,7 @@ public class PricingServiceIntegrationTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    public void getAllPrices() throws Exception {
+    public void getAllPrices() {
 
         Type typeOfListOfPrice = new TypeToken<List<Price>>(){}.getType();
 

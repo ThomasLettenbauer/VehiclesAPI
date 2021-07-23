@@ -2,7 +2,6 @@ package com.udacity.pricing;
 
 import com.udacity.pricing.domain.price.Price;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PriceList {
