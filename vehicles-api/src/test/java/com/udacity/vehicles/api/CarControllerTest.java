@@ -4,9 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -22,6 +20,7 @@ import com.udacity.vehicles.service.CarService;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
@@ -142,10 +141,35 @@ public class CarControllerTest {
     }
 
     /**
+     * Tests the update operation for a single car by ID.
+     * @throws Exception if the update operation for a single car fails
+     */
+
+    @Test
+    @Order(4)
+    public void updateCar() throws Exception {
+
+        Car car = getCar();
+
+        car.setModifiedAt(LocalDateTime.now());
+        car.getDetails().setExternalColor("Silver");
+
+        mvc.perform(
+                put("/cars/{id}", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json.write(car).getJson())
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.details.externalColor").value("Silver"));
+    }
+
+    /**
      * Tests the deletion of a single car by ID.
      * @throws Exception if the delete operation of a vehicle fails
      */
     @Test
+    @Order(5)
     public void deleteCar() throws Exception {
         /**
          * DONE: Add a test to check whether a vehicle is appropriately deleted
