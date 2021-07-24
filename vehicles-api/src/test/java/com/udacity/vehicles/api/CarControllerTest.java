@@ -91,7 +91,10 @@ public class CarControllerTest {
                         .content(json.write(car).getJson())
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.details.model").value("Impala"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.details.externalColor").value("white"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.condition").value(Condition.USED));
     }
 
     /**
@@ -135,7 +138,8 @@ public class CarControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.details.body").isNotEmpty());
+                .andExpect(MockMvcResultMatchers.jsonPath("$.details.body").isNotEmpty())
+        ;
 
         verify(carService, times(1)).findById(1L);
     }
@@ -153,6 +157,7 @@ public class CarControllerTest {
 
         car.setModifiedAt(LocalDateTime.now());
         car.getDetails().setExternalColor("Silver");
+        car.setCondition(Condition.NEW);
 
         mvc.perform(
                 put("/cars/{id}", 1L)
@@ -162,6 +167,7 @@ public class CarControllerTest {
                         .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.details.externalColor").value("Silver"));
+
     }
 
     /**
